@@ -1,7 +1,9 @@
-package org.beer.gestionalimentos.Entities;
+package org.gestionalimentos.Entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.gestionalimentos.Enums.CategoriaSelect;
+import org.gestionalimentos.Enums.EstadoSelect;
 
 import java.time.LocalDate;
 

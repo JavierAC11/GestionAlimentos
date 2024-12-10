@@ -1,10 +1,8 @@
-package org.beer.gestionalimentos.Entities;
+package org.gestionalimentos.Entities;
 
 import jakarta.persistence.*;
 import lombok.*;
 import jakarta.persistence.Entity;
-import jakarta.persistence.*;
-import lombok.*;
 
 import java.util.List;
 
@@ -28,6 +26,6 @@ public class Recipiente {
     @JoinColumn(name = "seccion_id")
     private Seccion seccion;
 
-    @OneToMany(mappedBy = "alimento", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "recipiente", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Alimento> alimentos;
 }

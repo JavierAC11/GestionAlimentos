@@ -1,4 +1,4 @@
-package org.beer.gestionalimentos.Entities;
+package org.gestionalimentos.Entities;
 
 import jakarta.persistence.*;
 import lombok.*;

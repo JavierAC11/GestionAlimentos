@@ -1,4 +1,4 @@
-package org.beer.gestionalimentos.Entities;
+package org.gestionalimentos.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
@@ -24,10 +24,10 @@ public class Seccion {
     private Integer accesibilidad;
 
     @ManyToOne
-    @JoinColumn(name = "almacen_id")
+    @JoinColumn(name = "seccion_id")
     @JsonBackReference
     private Almacen almacen;
 
-    @OneToMany(mappedBy = "recipiente", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "seccion", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Recipiente> recipientes;
 }

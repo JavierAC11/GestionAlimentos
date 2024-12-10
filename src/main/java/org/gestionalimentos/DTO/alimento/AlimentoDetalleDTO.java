@@ -18,6 +18,6 @@ public class AlimentoDetalleDTO {
 
     private CategoriaSelect categoria;
     private EstadoSelect estado;
-    private List<>
-    //TODO: Terminarlo
+    private Long idRecipiente;
+
 }

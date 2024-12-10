@@ -1,4 +1,4 @@
-package org.gestionalimentos.Entities;
+package org.gestionalimentos.Enums;
 
 public enum EstadoSelect {
     ABIERTO,

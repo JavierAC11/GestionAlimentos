@@ -1,4 +1,4 @@
-package org.beer.gestionalimentos;
+package org.gestionalimentos;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
