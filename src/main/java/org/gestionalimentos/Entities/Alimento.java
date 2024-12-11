@@ -2,8 +2,6 @@ package org.gestionalimentos.Entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.gestionalimentos.Enums.CategoriaSelect;
-import org.gestionalimentos.Enums.EstadoSelect;
 
 import java.time.LocalDate;
 
@@ -21,16 +19,7 @@ public class Alimento {
 
     @NonNull
     private String nombre;
-    private Boolean perecedero;
-    private Boolean abierto;
-    private Integer tamanio;
+    private String tipo;
+    private String estado;
     private LocalDate fechaCaducidad;
-
-    private CategoriaSelect categoria;
-    private EstadoSelect estado;
-
-
-    @ManyToOne
-    @JoinColumn(name = "recipiente_id")
-    private Recipiente recipiente;
 }

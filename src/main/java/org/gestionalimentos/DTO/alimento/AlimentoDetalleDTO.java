@@ -1,8 +1,7 @@
 package org.gestionalimentos.DTO.alimento;
 
 import lombok.Data;
-import org.gestionalimentos.Enums.CategoriaSelect;
-import org.gestionalimentos.Enums.EstadoSelect;
+
 
 import java.time.LocalDate;
 import java.util.List;
@@ -11,13 +10,8 @@ import java.util.List;
 public class AlimentoDetalleDTO {
     private Long id;
     private String nombre;
-    private Boolean perecedero;
-    private Boolean abierto;
-    private Integer tamanio;
-    private LocalDate fechaCaducidad;
-
-    private CategoriaSelect categoria;
-    private EstadoSelect estado;
-    private Long idRecipiente;
+    private String tipo;
+    private String estado;
+    private String fechaCaducidad;
 
 }

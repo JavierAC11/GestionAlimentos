@@ -4,7 +4,6 @@ import org.gestionalimentos.DTO.alimento.AlimentoDetalleDTO;
 import org.gestionalimentos.DTO.alimento.AlimentoListadoDTO;
 import org.gestionalimentos.DTO.alimento.CrearAlimentoDTO;
 import org.gestionalimentos.DTO.alimento.ModificarAlimentoDTO;
-import org.gestionalimentos.Entities.Alimento;
 import org.gestionalimentos.Services.AlimentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
