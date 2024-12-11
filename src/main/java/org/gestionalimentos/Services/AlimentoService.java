@@ -1,12 +1,14 @@
 package org.gestionalimentos.Services;
 
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.gestionalimentos.DTO.alimento.AlimentoDetalleDTO;
 import org.gestionalimentos.DTO.alimento.AlimentoListadoDTO;
 import org.gestionalimentos.DTO.alimento.CrearAlimentoDTO;
 import org.gestionalimentos.DTO.alimento.ModificarAlimentoDTO;
 import org.gestionalimentos.Entities.Alimento;
 import org.gestionalimentos.Repositories.AlimentoRepository;
+import org.gestionalimentos.exceptions.AlimentoCaducado;
 import org.gestionalimentos.exceptions.RecursoNoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
+@Slf4j
 @Service
 public class AlimentoService {
     private final AlimentoRepository alimentoRepository;
@@ -35,6 +38,9 @@ public class AlimentoService {
     public AlimentoDetalleDTO obtenerAlimento(Long id) {
         Alimento alimento = alimentoRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontrado("Alimento no encontrado"));
+        if (alimento.getFechaCaducidad().isBefore(LocalDate.now())) {
+            throw new AlimentoCaducado("El alimento ha caducado");
+        }
         return convertirAAlimentoDetalleDTO(alimento);
     }
 
