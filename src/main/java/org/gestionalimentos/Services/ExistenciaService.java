@@ -5,14 +5,19 @@ import org.gestionalimentos.DTO.existencia.ExistenciaDetalleDTO;
 import org.gestionalimentos.DTO.existencia.ExistenciaListadoDTO;
 import org.gestionalimentos.DTO.existencia.ModificarExistenciaDTO;
 import org.gestionalimentos.Entities.Existencia;
+import org.gestionalimentos.Entities.Ubicacion;
 import org.gestionalimentos.Repositories.AlimentoRepository;
 import org.gestionalimentos.Repositories.ExistenciaRepository;
 import org.gestionalimentos.Repositories.UbicacionRepository;
 import org.gestionalimentos.exceptions.RecursoNoEncontrado;
+import org.gestionalimentos.exceptions.UbicacionCompleta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class ExistenciaService {
@@ -43,11 +48,20 @@ public class ExistenciaService {
 
     public ExistenciaDetalleDTO crearExistencia(CrearExistenciaDTO crearExistenciaDTO){
         Existencia existencia = new Existencia();
+        Ubicacion ubicacion = ubicacionRepository.findById(crearExistenciaDTO.getUbicacion())
+                .orElseThrow(() -> new RecursoNoEncontrado("Ubicacion no encontrada"));
+        Page<Existencia> existencias = existenciaRepository.findByUbicacion(ubicacion.getId());
+
+        if (existencias.getTotalElements() >= ubicacion.getCapacidad()) {
+            throw new UbicacionCompleta("Ubicacion llena");
+        }
+
         existencia.setCantidad(crearExistenciaDTO.getCantidad());
         existencia.setUbicacion(ubicacionRepository.findById(crearExistenciaDTO.getUbicacion())
                 .orElseThrow(() -> new RecursoNoEncontrado("Ubicacion no encontrada")));
         existencia.setAlimento(alimentoRepository.findById(crearExistenciaDTO.getAlimento())
                 .orElseThrow(() -> new RecursoNoEncontrado("Alimento no encontrado")));
+        existencia.setFechaEntrada(LocalDate.now());
         existenciaRepository.save(existencia);
         return convertirAExistenciaDetalleDTO(existencia);
     }
