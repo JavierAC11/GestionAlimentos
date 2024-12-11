@@ -6,6 +6,7 @@ import org.gestionalimentos.DTO.ubicacion.UbicacionDetalleDTO;
 import org.gestionalimentos.DTO.ubicacion.UbicacionListadoDTO;
 import org.gestionalimentos.Entities.Ubicacion;
 import org.gestionalimentos.Repositories.UbicacionRepository;
+import org.gestionalimentos.exceptions.RecursoNoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +30,7 @@ public class UbicacionService {
 
     public UbicacionDetalleDTO obtenerUbicacion(Long id) {
         Ubicacion ubicacion = ubicacionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ubicacion no encontrada"));
+                .orElseThrow(() -> new RecursoNoEncontrado("Ubicacion no encontrada"));
         return convertirAUbicacionDetalleDTO(ubicacion);
     }
 
@@ -45,14 +46,14 @@ public class UbicacionService {
 
     public void borrarUbicacion(Long id) {
         if (!ubicacionRepository.existsById(id)) {
-            throw new RuntimeException("Ubicacion no encontrada");
+            throw new RecursoNoEncontrado("Ubicacion no encontrada");
         }
         ubicacionRepository.deleteById(id);
     }
 
     public UbicacionDetalleDTO actualizarUbicacion(Long id, ModificarUbicacionDTO modificarUbicacionDTO) {
         Ubicacion ubicacion = ubicacionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ubicacion no encontrada"));
+                .orElseThrow(() -> new RecursoNoEncontrado("Ubicacion no encontrada"));
         ubicacion.setNombre(modificarUbicacionDTO.getNombre());
         ubicacion.setDescripcion(modificarUbicacionDTO.getDescripcion());
         ubicacion.setCapacidad(modificarUbicacionDTO.getCapacidad());

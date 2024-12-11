@@ -8,6 +8,7 @@ import org.gestionalimentos.Entities.Existencia;
 import org.gestionalimentos.Repositories.AlimentoRepository;
 import org.gestionalimentos.Repositories.ExistenciaRepository;
 import org.gestionalimentos.Repositories.UbicacionRepository;
+import org.gestionalimentos.exceptions.RecursoNoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +37,7 @@ public class ExistenciaService {
 
     public ExistenciaDetalleDTO obtenerExistencia(Long id){
         Existencia existencia = existenciaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Existencia no encontrada"));
+                .orElseThrow(() -> new RecursoNoEncontrado("Existencia no encontrada"));
         return convertirAExistenciaDetalleDTO(existencia);
     }
 
@@ -44,28 +45,28 @@ public class ExistenciaService {
         Existencia existencia = new Existencia();
         existencia.setCantidad(crearExistenciaDTO.getCantidad());
         existencia.setUbicacion(ubicacionRepository.findById(crearExistenciaDTO.getUbicacion())
-                .orElseThrow(() -> new RuntimeException("Ubicacion no encontrada")));
+                .orElseThrow(() -> new RecursoNoEncontrado("Ubicacion no encontrada")));
         existencia.setAlimento(alimentoRepository.findById(crearExistenciaDTO.getAlimento())
-                .orElseThrow(() -> new RuntimeException("Alimento no encontrado")));
+                .orElseThrow(() -> new RecursoNoEncontrado("Alimento no encontrado")));
         existenciaRepository.save(existencia);
         return convertirAExistenciaDetalleDTO(existencia);
     }
 
     public void borrarExistencia(Long id){
         if (!existenciaRepository.existsById(id)) {
-            throw new RuntimeException("Existencia no encontrada");
+            throw new RecursoNoEncontrado("Existencia no encontrada");
         }
         existenciaRepository.deleteById(id);
     }
 
     public ExistenciaDetalleDTO actualizarExistencia(Long id, ModificarExistenciaDTO modificarExistenciaDTO){
         Existencia existencia = existenciaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Existencia no encontrada"));
+                .orElseThrow(() -> new RecursoNoEncontrado("Existencia no encontrada"));
         if (modificarExistenciaDTO.getCantidad() != null) existencia.setCantidad(modificarExistenciaDTO.getCantidad());
         if (modificarExistenciaDTO.getUbicacion() != null) existencia.setUbicacion(ubicacionRepository.findById(modificarExistenciaDTO.getUbicacion())
-                .orElseThrow(() -> new RuntimeException("Ubicacion no encontrada")));
+                .orElseThrow(() -> new RecursoNoEncontrado("Ubicacion no encontrada")));
         if (modificarExistenciaDTO.getAlimento() != null) existencia.setAlimento(alimentoRepository.findById(modificarExistenciaDTO.getAlimento())
-                .orElseThrow(() -> new RuntimeException("Alimento no encontrado")));
+                .orElseThrow(() -> new RecursoNoEncontrado("Alimento no encontrado")));
 
         existenciaRepository.save(existencia);
         return convertirAExistenciaDetalleDTO(existencia);

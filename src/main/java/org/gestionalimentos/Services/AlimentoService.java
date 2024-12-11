@@ -7,6 +7,7 @@ import org.gestionalimentos.DTO.alimento.CrearAlimentoDTO;
 import org.gestionalimentos.DTO.alimento.ModificarAlimentoDTO;
 import org.gestionalimentos.Entities.Alimento;
 import org.gestionalimentos.Repositories.AlimentoRepository;
+import org.gestionalimentos.exceptions.RecursoNoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +34,7 @@ public class AlimentoService {
 
     public AlimentoDetalleDTO obtenerAlimento(Long id) {
         Alimento alimento = alimentoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Alimento no encontrado"));
+                .orElseThrow(() -> new RecursoNoEncontrado("Alimento no encontrado"));
         return convertirAAlimentoDetalleDTO(alimento);
     }
 
@@ -50,14 +51,14 @@ public class AlimentoService {
 
     public void borrarAlimento(Long id) {
         if (!alimentoRepository.existsById(id)) {
-            throw new RuntimeException("Alimento no encontrado");
+            throw new RecursoNoEncontrado("Alimento no encontrado");
         }
         alimentoRepository.deleteById(id);
     }
 
     public AlimentoDetalleDTO actualizarAlimento(Long id, ModificarAlimentoDTO modificarAlimentoDTO) {
         Alimento alimento = alimentoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Alimento no encontrado"));
+                .orElseThrow(() -> new RecursoNoEncontrado("Alimento no encontrado"));
 
         if (modificarAlimentoDTO.getTipo() != null) alimento.setTipo(modificarAlimentoDTO.getTipo());
         if (modificarAlimentoDTO.getEstado() != null) alimento.setEstado(modificarAlimentoDTO.getEstado());
