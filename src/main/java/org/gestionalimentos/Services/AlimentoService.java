@@ -7,7 +7,10 @@ import org.gestionalimentos.DTO.alimento.AlimentoListadoDTO;
 import org.gestionalimentos.DTO.alimento.CrearAlimentoDTO;
 import org.gestionalimentos.DTO.alimento.ModificarAlimentoDTO;
 import org.gestionalimentos.Entities.Alimento;
+import org.gestionalimentos.Entities.Existencia;
 import org.gestionalimentos.Repositories.AlimentoRepository;
+import org.gestionalimentos.Repositories.ExistenciaRepository;
+import org.gestionalimentos.Repositories.UbicacionRepository;
 import org.gestionalimentos.exceptions.AlimentoCaducado;
 import org.gestionalimentos.exceptions.RecursoNoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +27,12 @@ mover alimentos de sitio,
 @Service
 public class AlimentoService {
     private final AlimentoRepository alimentoRepository;
+    private final ExistenciaRepository existenciaRepository;
 
     @Autowired
-    public AlimentoService(AlimentoRepository alimentoRepository) {
+    public AlimentoService(AlimentoRepository alimentoRepository, ExistenciaRepository existenciaRepository) {
         this.alimentoRepository = alimentoRepository;
+        this.existenciaRepository = existenciaRepository;
     }
 
     public Page<AlimentoListadoDTO> listarAlimentos (Pageable pageable){
@@ -76,6 +81,15 @@ public class AlimentoService {
         alimentoRepository.save(alimento);
         return convertirAAlimentoDetalleDTO(alimento);
     }
+
+    public Page<AlimentoListadoDTO> listarAlimentosPorUbicacion(Long ubicacionId, Pageable pageable) {
+        existenciaRepository.findByUbicacionId(ubicacionId, pageable);
+        Page<Existencia> existencias = existenciaRepository.findByUbicacionId(ubicacionId, pageable);
+        Page<Alimento> alimentos = existencias.map(Existencia::getAlimento);
+
+        return alimentos.map(this::convertirAAlimentoListadoDTO);
+    }
+
 
     public Page<AlimentoListadoDTO> obtenerAlimentosPorCaducar(Pageable pageable, Integer dias) {
         LocalDate fechaLimite = LocalDate.now().plusDays(dias);

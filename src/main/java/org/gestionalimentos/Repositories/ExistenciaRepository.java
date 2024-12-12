@@ -9,4 +9,6 @@ public interface ExistenciaRepository extends JpaRepository<Existencia, Long> {
 
     Page<Existencia> findByUbicacion(Long idUbicacion, Pageable pageable);
 
+    Page<Existencia> findByUbicacionId(Long ubicacionId, Pageable pageable);
 }
+

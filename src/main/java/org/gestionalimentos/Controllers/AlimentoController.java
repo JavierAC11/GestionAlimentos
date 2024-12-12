@@ -38,6 +38,11 @@ public class AlimentoController {
         return ResponseEntity.ok(alimentoService.obtenerAlimentosPorCaducar(pageable, dias));
     }
 
+    @GetMapping("/ubicacion/{id}")
+    ResponseEntity<Page<AlimentoListadoDTO>> listarAlimentosPorUbicacion(@PathVariable Long id, Pageable pageable){
+        return ResponseEntity.ok(alimentoService.listarAlimentosPorUbicacion(id, pageable));
+    }
+
     @PostMapping
     ResponseEntity<AlimentoDetalleDTO> crearAlimento (@RequestBody CrearAlimentoDTO crearAlimentoDTO){
         AlimentoDetalleDTO nuevoAlimento = alimentoService.crearAlimento(crearAlimentoDTO);

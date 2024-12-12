@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 public class ExistenciaService {
@@ -74,13 +74,7 @@ public class ExistenciaService {
         existenciaRepository.deleteById(id);
     }
 
-    /*ógica de Negocio Avanzada: Consultas e Informes (10%)
-• Implementación de funciones avanzadas para generar informes del estado de inventar-
-ios, tales como:
-– Cantidad total y disponibilidad por ubicación (alacena, nevera, congelador).
-– Resumen de alimentos próximos a caducar agrupados por ubicación.
-– Estadísticas de uso: alimentos más utilizados y su frecuencia de entrada/salida.*/
-
+    @Transactional
     public ExistenciaDetalleDTO moverExistencia(Long id, Long idUbicacion) {
         Existencia existencia = existenciaRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontrado("Existencia no encontrada"));
