@@ -45,6 +45,14 @@ public class ExistenciasController {
         return ResponseEntity.ok(existenciaActualizada);
     }
 
+    @PutMapping("/{id}/mover")
+    public ResponseEntity<ExistenciaDetalleDTO> moverExistencia(
+            @PathVariable Long id,
+            @RequestBody Long idUbicacion) {
+        ExistenciaDetalleDTO existenciaActualizada = existenciaService.moverExistencia(id, idUbicacion);
+        return ResponseEntity.ok(existenciaActualizada);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarExistencia(@PathVariable Long id) {
         existenciaService.borrarExistencia(id);

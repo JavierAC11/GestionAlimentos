@@ -74,6 +74,29 @@ public class ExistenciaService {
         existenciaRepository.deleteById(id);
     }
 
+    /*ógica de Negocio Avanzada: Consultas e Informes (10%)
+• Implementación de funciones avanzadas para generar informes del estado de inventar-
+ios, tales como:
+– Cantidad total y disponibilidad por ubicación (alacena, nevera, congelador).
+– Resumen de alimentos próximos a caducar agrupados por ubicación.
+– Estadísticas de uso: alimentos más utilizados y su frecuencia de entrada/salida.*/
+
+    public ExistenciaDetalleDTO moverExistencia(Long id, Long idUbicacion) {
+        Existencia existencia = existenciaRepository.findById(id)
+                .orElseThrow(() -> new RecursoNoEncontrado("Existencia no encontrada"));
+        Ubicacion ubicacion = ubicacionRepository.findById(idUbicacion)
+                .orElseThrow(() -> new RecursoNoEncontrado("Ubicacion no encontrada"));
+
+        Existencia existenciaNueva = new Existencia();
+        existenciaNueva.setCantidad(existencia.getCantidad());
+        existenciaNueva.setUbicacion(ubicacion);
+        existenciaNueva.setAlimento(existencia.getAlimento());
+        existenciaNueva.setFechaEntrada(LocalDate.now());
+        existenciaRepository.save(existenciaNueva);
+        return convertirAExistenciaDetalleDTO(existenciaNueva);
+    }
+
+
     public ExistenciaDetalleDTO actualizarExistencia(Long id, ModificarExistenciaDTO modificarExistenciaDTO){
         Existencia existencia = existenciaRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontrado("Existencia no encontrada"));
