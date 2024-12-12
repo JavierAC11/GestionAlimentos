@@ -33,6 +33,11 @@ public class AlimentoController {
         return ResponseEntity.ok(alimentoService.obtenerAlimento(id));
     }
 
+    @GetMapping("/caducados")
+    ResponseEntity<Page<AlimentoListadoDTO>> listarAlimentosCaducados(@RequestParam Integer dias, Pageable pageable){
+        return ResponseEntity.ok(alimentoService.obtenerAlimentosPorCaducar(pageable, dias));
+    }
+
     @PostMapping
     ResponseEntity<AlimentoDetalleDTO> crearAlimento (@RequestBody CrearAlimentoDTO crearAlimentoDTO){
         AlimentoDetalleDTO nuevoAlimento = alimentoService.crearAlimento(crearAlimentoDTO);

@@ -50,7 +50,8 @@ public class ExistenciaService {
         Existencia existencia = new Existencia();
         Ubicacion ubicacion = ubicacionRepository.findById(crearExistenciaDTO.getUbicacion())
                 .orElseThrow(() -> new RecursoNoEncontrado("Ubicacion no encontrada"));
-        Page<Existencia> existencias = existenciaRepository.findByUbicacion(ubicacion.getId());
+        Pageable pageable = Pageable.unpaged();
+        Page<Existencia> existencias = existenciaRepository.findByUbicacion(ubicacion.getId(), pageable);
 
         if (existencias.getTotalElements() >= ubicacion.getCapacidad()) {
             throw new UbicacionCompleta("Ubicacion llena");

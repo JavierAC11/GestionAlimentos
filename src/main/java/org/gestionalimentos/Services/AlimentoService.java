@@ -17,6 +17,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
+/*rotación de alimentos,
+mover alimentos de sitio,
+*/
 @Slf4j
 @Service
 public class AlimentoService {
@@ -72,6 +75,12 @@ public class AlimentoService {
         if (modificarAlimentoDTO.getNombre() != null) alimento.setNombre(modificarAlimentoDTO.getNombre());
         alimentoRepository.save(alimento);
         return convertirAAlimentoDetalleDTO(alimento);
+    }
+
+    public Page<AlimentoListadoDTO> obtenerAlimentosPorCaducar(Pageable pageable, Integer dias) {
+        LocalDate fechaLimite = LocalDate.now().plusDays(dias);
+        Page<Alimento> alimentos = alimentoRepository.findByFechaCaducidadBefore(fechaLimite, pageable);
+        return alimentos.map(this::convertirAAlimentoListadoDTO);
     }
 
     private AlimentoDetalleDTO convertirAAlimentoDetalleDTO(Alimento alimento) {
