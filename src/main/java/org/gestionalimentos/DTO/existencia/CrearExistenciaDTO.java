@@ -7,5 +7,4 @@ public class CrearExistenciaDTO {
     private Integer cantidad;
     private Long alimento;
     private Long ubicacion;
-    private String fechaEntrada;
 }

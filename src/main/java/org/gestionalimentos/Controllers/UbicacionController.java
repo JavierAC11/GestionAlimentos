@@ -5,6 +5,7 @@ import org.gestionalimentos.DTO.ubicacion.ModificarUbicacionDTO;
 import org.gestionalimentos.DTO.ubicacion.UbicacionDetalleDTO;
 import org.gestionalimentos.DTO.ubicacion.UbicacionListadoDTO;
 import org.gestionalimentos.Services.UbicacionService;
+import org.gestionalimentos.exceptions.RecursoNoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,8 +31,14 @@ public class UbicacionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UbicacionDetalleDTO> obtenerUbicacion(Long id){
-        return ResponseEntity.ok(ubicacionService.obtenerUbicacion(id));
+    public ResponseEntity<UbicacionDetalleDTO> obtenerUbicacion(@PathVariable Long id){
+        try {
+            return ResponseEntity.ok(ubicacionService.obtenerUbicacion(id));
+        }
+        catch (RecursoNoEncontrado e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
     }
 
     @PostMapping

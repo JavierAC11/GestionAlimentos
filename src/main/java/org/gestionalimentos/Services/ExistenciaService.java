@@ -53,7 +53,7 @@ public class ExistenciaService {
         Pageable pageable = Pageable.unpaged();
         Page<Existencia> existencias = existenciaRepository.findByUbicacion(ubicacion.getId(), pageable);
 
-        if (existencias.getTotalElements() >= ubicacion.getCapacidad()) {
+        if (existencias.stream().mapToInt(Existencia::getCantidad).sum() >= ubicacion.getCapacidad()) {
             throw new UbicacionCompleta("Ubicacion llena");
         }
 

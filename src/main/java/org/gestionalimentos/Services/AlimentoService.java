@@ -85,6 +85,10 @@ public class AlimentoService {
     public Page<AlimentoListadoDTO> listarAlimentosPorUbicacion(Long ubicacionId, Pageable pageable) {
         existenciaRepository.findByUbicacionId(ubicacionId, pageable);
         Page<Existencia> existencias = existenciaRepository.findByUbicacionId(ubicacionId, pageable);
+
+        if (existencias.isEmpty()) {
+            throw new RecursoNoEncontrado("No hay alimentos en esta ubicacion o no existe la ubicacion");
+        }
         Page<Alimento> alimentos = existencias.map(Existencia::getAlimento);
 
         return alimentos.map(this::convertirAAlimentoListadoDTO);

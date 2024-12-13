@@ -5,6 +5,7 @@ import org.gestionalimentos.DTO.alimento.AlimentoListadoDTO;
 import org.gestionalimentos.DTO.alimento.CrearAlimentoDTO;
 import org.gestionalimentos.DTO.alimento.ModificarAlimentoDTO;
 import org.gestionalimentos.Services.AlimentoService;
+import org.gestionalimentos.exceptions.AlimentoCaducado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,12 +29,19 @@ public class AlimentoController {
         return ResponseEntity.ok(alimentoService.listarAlimentos(pageable));
     }
 
+
     @GetMapping("/{id}")
     ResponseEntity<AlimentoDetalleDTO> obtenerAlimento (@PathVariable Long id){
-        return ResponseEntity.ok(alimentoService.obtenerAlimento(id));
+        try {
+            return ResponseEntity.ok(alimentoService.obtenerAlimento(id));
+        }
+        catch (AlimentoCaducado e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
     }
 
-    @GetMapping("/caducados")
+    @GetMapping("/porCaducar")
     ResponseEntity<Page<AlimentoListadoDTO>> listarAlimentosCaducados(@RequestParam Integer dias, Pageable pageable){
         return ResponseEntity.ok(alimentoService.obtenerAlimentosPorCaducar(pageable, dias));
     }

@@ -27,7 +27,7 @@ public class ExistenciasController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ExistenciaDetalleDTO> obtenerExistencia(Long id){
+    public ResponseEntity<ExistenciaDetalleDTO> obtenerExistencia(@PathVariable Long id){
         return ResponseEntity.ok(existenciaService.obtenerExistencia(id));
     }
 
