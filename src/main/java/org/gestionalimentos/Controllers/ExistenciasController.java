@@ -48,7 +48,7 @@ public class ExistenciasController {
     @PutMapping("/{id}/mover")
     public ResponseEntity<ExistenciaDetalleDTO> moverExistencia(
             @PathVariable Long id,
-            @RequestBody Long idUbicacion) {
+            @RequestParam Long idUbicacion) {
         ExistenciaDetalleDTO existenciaActualizada = existenciaService.moverExistencia(id, idUbicacion);
         return ResponseEntity.ok(existenciaActualizada);
     }

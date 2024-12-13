@@ -2,6 +2,7 @@ package org.gestionalimentos.Entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
 
@@ -24,10 +25,12 @@ public class Existencia {
 
     @ManyToOne
     @JoinColumn(name = "alimento_id")
+    @NotNull
     private Alimento alimento;
 
     @ManyToOne
     @JoinColumn(name = "ubicacion_id")
+    @NotNull
     private Ubicacion ubicacion;
 
 }
