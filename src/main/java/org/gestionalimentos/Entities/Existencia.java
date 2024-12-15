@@ -6,6 +6,11 @@ import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
 
+/**
+ * Entidad que representa la Existencia de un alimento en un lugar específico dentro del sistema.
+ * Esta clase mapea la tabla 'Existencia' en la base de datos, que contiene información
+ * sobre las existencias de alimentos en diferentes ubicaciones.
+ */
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor

@@ -2,6 +2,9 @@ package org.gestionalimentos.DTO.existencia;
 
 import lombok.Data;
 
+/**
+ * Clase que representa el objeto de transferencia de datos (DTO) con la información resumida de una existencia de alimento.
+ */
 @Data
 public class ExistenciaListadoDTO {
     private Long id;

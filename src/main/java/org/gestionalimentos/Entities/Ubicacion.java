@@ -5,7 +5,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
-
+/**
+ * Entidad que representa una Ubicación dentro del sistema.
+ * Esta clase mapea la tabla 'Ubicacion' en la base de datos, que contiene información
+ * sobre los lugares o áreas donde se almacenan los alimentos en el sistema.
+ */
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor

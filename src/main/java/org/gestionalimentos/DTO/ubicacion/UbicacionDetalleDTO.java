@@ -1,7 +1,9 @@
 package org.gestionalimentos.DTO.ubicacion;
 
 import lombok.Data;
-
+/**
+ * Clase que representa el objeto de transferencia de datos (DTO) que contiene los detalles de una ubicación específica en el sistema.
+ */
 @Data
 public class UbicacionDetalleDTO {
 

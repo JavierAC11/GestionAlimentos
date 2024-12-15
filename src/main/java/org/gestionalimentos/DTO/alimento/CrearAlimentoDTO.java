@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.NonNull;
 import org.hibernate.annotations.NotFound;
 
+/**
+ * Clase que representa el objeto de transferencia de datos (DTO) utilizado para crear un nuevo alimento.
+ */
 @Data
 public class CrearAlimentoDTO {
 
@@ -12,6 +15,8 @@ public class CrearAlimentoDTO {
 
     @NotFound
     private String tipo;
+
     private String estado;
+
     private String fechaCaducidad;
 }
